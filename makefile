@@ -1,8 +1,9 @@
-.PHONY: up down init produce
+.PHONY: setup up down init produce query
 
 setup:
 	@echo "Setting up ClickHouse..."
 	python3 -m venv .venv
+	.venv/bin/pip install -r requirements.txt
 
 up:
 	@echo "Starting containers..."
