@@ -32,7 +32,7 @@ def produce():
             producer.send(TOPIC, value=event)
             producer.flush()
             print(f"Produced: {event}")
-            time.sleep(1)  # Send 1 message per second (adjust as needed)
+            time.sleep(0.01)  # Send 1 message per second (adjust as needed)
     except KeyboardInterrupt:
         print("Stopped Producer.")
     finally:
