@@ -1,6 +1,8 @@
-# ClickHouse 系列：與 Kafka 整合打造即時 Data Streaming Pipeline
+# ClickHouse 系列：整合 Grafana 打造可視化監控
 
-這個專案整合了 **Kafka 和 ClickHouse** 整合環境，用於建立即時 Data Streaming Pipeline。專案包含資料 Produce、Consume、Store和Query的完整流程。
+這個專案整合了 **Kafka、ClickHouse 和 Grafana**，用於建立即時 Data Streaming Pipeline。專案包含資料生產、消費、儲存、儀錶板的完整流程。
+
+專案可搭配[文章](https://blog.vicwen.app/posts/clickhouse-grafana-dashboard/)一同享用。
 
 此專案為最小可行性方案，只有簡單設定服務。
 
@@ -41,8 +43,9 @@ make query
 | ClickHouse HTTP | 8123 | HTTP 介面 | `localhost:8123` |
 | ClickHouse Native | 9000 | 原生協議 | `localhost:9000` |
 | Kafka UI | 7777 | 管理介面 | `http://localhost:7777` |
+| Grafana | 3000 | 監控儀表板 | `http://localhost:3000` |
 
-## 📁 專案結構
+## 專案結構
 
 ```
 kafka-clickhouse-data-streaming-pipeline/
@@ -104,6 +107,31 @@ kafka-clickhouse-data-streaming-pipeline/
 前往 `http://localhost:7777` 來查看 ClickHouse：
 - 帳號密碼為：default
 - 查詢 `kafka_user_events` 請在最後加上 `SETTINGS stream_like_engine_allow_direct_select = 1` (ClickHouse 預設不支援直接讀取)
+
+### Grafana 監控
+
+前往 `http://localhost:3000` 來查看 Grafana 監控儀表板：
+- 預設帳號密碼：admin/admin
+- 已預先安裝 ClickHouse 資料來源插件
+
+## 可用指令
+
+| 指令 | 描述 |
+|------|------|
+| `make setup` | 建立 Python 虛擬環境並安裝依賴 |
+| `make up` | 啟動所有 Docker 服務 |
+| `make down` | 停止並移除所有容器 |
+| `make init` | 初始化 ClickHouse 表格 |
+| `make produce` | 開始生產測試資料到 Kafka |
+| `make query` | 查詢 ClickHouse 中的資料 |
+
+## 技術架構
+
+- **Kafka**: 訊息佇列和事件串流平台
+- **ClickHouse**: 高效能列式資料庫
+- **Grafana**: 監控和可視化平台
+- **Zookeeper**: Kafka 的協調服務
+- **Docker Compose**: 容器編排工具
 
 ## 授權
 
